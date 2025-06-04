@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Detalles del Lote</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.2/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 bg-opacity-75">
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-lg mx-auto bg-white rounded-lg shadow-lg p-6">
+            <h1 class="text-2xl font-bold text-center mb-6">Detalles del Lote</h1>
+
+            <!-- Detalles del Lote -->
+            <div class="mb-4">
+                <h3 class="font-semibold">Cerveza cargada</h3>
+                <p th:text="${lote.cerveza}" class="text-gray-700"></p>
+            </div>
+
+            <div class="mb-4">
+                <h3 class="font-semibold">Cantidad de Litros Cargados</h3>
+                <p th:text="${lote.cantidadLitros}" class="text-gray-700"></p>
+            </div>
+
+            <div class="mb-4">
+                <h3 class="font-semibold">Estado</h3>
+                <p th:text="${lote.estado}" class="text-gray-700"></p>
+            </div>
+
+            <div class="mb-4">
+                <h3 class="font-semibold">Notas</h3>
+                <p th:text="${lote.notas}" class="text-gray-700"></p>
+            </div>
+
+            <div class="mb-4">
+                <h3 class="font-semibold">Fecha de Carga</h3>
+                <p th:text="${lote.fechaCarga}" class="text-gray-700"></p>
+            </div>
+
+            <div class="mb-4">
+                <h3 class="font-semibold">Fecha de Vencimiento</h3>
+                <p th:text="${lote.fechaVencimiento}" class="text-gray-700"></p>
+            </div>
+
+            <div class="mb-4">
+                <h3 class="font-semibold">Fecha de Carga Madurador</h3>
+                <p th:text="${lote.fechaCargaMadurador}" class="text-gray-700"></p>
+            </div>
+
+            <!-- Botón Volver -->
+            <div class="flex justify-end mt-6">
+                <a href="/lote" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Volver</a>
+            </div>
+
+            <!-- Asignar Barriles -->
+			<div class="mt-8">
+			    <h2 class="text-xl font-semibold mb-4">Barriles Asociados al Lote</h2>
+			    <table class="table-auto w-full border-collapse border border-gray-200">
+			        <thead>
+			            <tr class="bg-gray-100">
+			                <th class="border border-gray-300 px-4 py-2">ID</th>
+			                <th class="border border-gray-300 px-4 py-2">Litros</th>
+			                <th class="border border-gray-300 px-4 py-2">Estado</th>
+			            </tr>
+			        </thead>
+			        <tbody>
+			            <tr th:each="barril : ${barrilesCargados}">
+			                <td th:text="${barril.id}" class="border border-gray-300 px-4 py-2 text-center"></td>
+			                <td th:text="${barril.litros}" class="border border-gray-300 px-4 py-2 text-center"></td>
+			                <td th:text="${barril.estado}" class="border border-gray-300 px-4 py-2 text-center"></td>
+			            </tr>
+			        </tbody>
+			    </table>
+			</div>
+
+			<!-- Asignar Barriles -->
+			<div class="mt-8">
+			    <h2 class="text-xl font-semibold mb-4">Asignar Barriles</h2>
+			    <form th:action="@{/lote/{id}/cargarBarriles(id=${lote.id})}" method="post">
+			        <table class="table-auto w-full border-collapse border border-gray-200">
+			            <thead>
+			                <tr class="bg-gray-100">
+			                    <th class="border border-gray-300 px-4 py-2">Seleccionar</th>
+			                    <th class="border border-gray-300 px-4 py-2">ID</th>
+			                    <th class="border border-gray-300 px-4 py-2">Litros</th>
+			                    <th class="border border-gray-300 px-4 py-2">Estado</th>
+			                </tr>
+			            </thead>
+			            <tbody>
+			                <tr th:each="barril : ${barrilesLimpios}">
+			                    <td class="border border-gray-300 px-4 py-2 text-center">
+			                        <input type="checkbox" name="barrilesSeleccionados" th:value="${barril.id}">
+			                    </td>
+			                    <td th:text="${barril.id}" class="border border-gray-300 px-4 py-2 text-center"></td>
+			                    <td th:text="${barril.litros}" class="border border-gray-300 px-4 py-2 text-center"></td>
+			                    <td th:text="${barril.estado}" class="border border-gray-300 px-4 py-2 text-center"></td>
+			                </tr>
+			            </tbody>
+			        </table>
+			        <div class="flex justify-end mt-4">
+			            <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">
+			                Cargar Barriles
+			            </button>
+			        </div>
+			    </form>
+			</div>
+        </div>
+    </div>
+</body>
+</html>
