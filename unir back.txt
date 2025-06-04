@@ -1,0 +1,50 @@
+en uno de los back
+"clean install" con skip de test
+despues lo importo como depencencia en el pom.xml del otro back
+ejemplo de los datos necesarios
+    <dependency>
+		<groupId>com.sierramaestra</groupId>
+        <artifactId>SierraMaestraSystem</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+
+al final es con "clean package" porque scaproject compila a un war no a un jar
+
+    <dependency>
+        <groupId>com.sca</groupId>
+        <artifactId>sca</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <type>war</type>
+    </dependency>
+</dependencies>
+
+<build>
+    <plugins>
+        <plugin>
+            <artifactId>maven-war-plugin</artifactId>
+            <version>3.3.2</version>
+            <configuration>
+                <overlays>
+                    <overlay>
+                        <groupId>com.sca</groupId>
+                        <artifactId>sca</artifactId>
+                        <type>war</type>
+                    </overlay>
+                </overlays>
+            </configuration>
+        </plugin>
+        <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <configuration>
+                <mainClass>com.sierramaestra.SierraMaestraSystemApplication</mainClass>
+                <excludes>
+                    <exclude>
+                        <groupId>org.projectlombok</groupId>
+                        <artifactId>lombok</artifactId>
+                    </exclude>
+                </excludes>
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
